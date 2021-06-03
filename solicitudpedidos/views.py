@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 # Create your views here.
 
@@ -7,7 +9,19 @@ from django.http import HttpResponse
 def login_usuarios(
     request,
 ):
-    return render(request, "solicitudpedidos/login.html")
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("formulario_pedidos")
+        else:
+            messages.info(request, "usuario o contraseña incorrectos")
+    context = {}
+    return render(request, "solicitudpedidos/login.html", context)
 
 
 def formulario_pedidos(

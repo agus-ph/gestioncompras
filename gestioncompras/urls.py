@@ -18,7 +18,7 @@ from django.urls import path
 from solicitudpedidos.views import login_usuarios, formulario_pedidos
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("login/", login_usuarios),
-    path("formulario_pedidos/", formulario_pedidos),
+    path("admin/", admin.site.urls, ),
+    path("login/", login_usuarios, name="login"),
+    path("formulario_pedidos/", formulario_pedidos, name="formulario_pedidos"),
 ]
